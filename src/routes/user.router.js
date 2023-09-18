@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {userMongo} from "../manager/user/userManagerMongo.js";
 import { hashdata , compareHash } from "../utils.js";
-
+import passport from "passport";
 
 const router = Router();
 
@@ -43,11 +43,27 @@ router.post('/login', async (req, res) => {
     req.session['email'] = email
     console.log(req.session)
     res.status(200).redirect("/index")
-})
+}) 
+ 
+/* router.post('/login', passport.authenticate('local',{failureRedirect:"/"}), 
+(req, res) => {
+    console.log("hola")
+    res.redirect("/index")})
+ */
+
 
 router.get('/logout', async (req, res) => {
     req.session.destroy()
     res.clearCookie("connect.sid").redirect("/")
 })
 
+
+router.get("/githubSingUp",passport.authenticate('github', { scope: [ 'user:email' ] }))
+
+router.get("/github", passport.authenticate('github', { failureRedirect: '/login' }),
+    async (req, res) => {
+        
+        res.redirect("/index")
+    
+})
 export default router;

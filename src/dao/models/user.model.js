@@ -9,18 +9,25 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    username:{
+        type:String,
+    },
     email:{
         type:String,
         required:true
     },
     age:{
-        type:String,
-        required:true
+        type:String
     },
     password:{
         type:String,
         required:true},
     isAdmin:{
+        type:Boolean,
+        requireed:true,
+        default:false 
+    },
+    githubLog:{
         type:Boolean,
         requireed:true,
         default:false 

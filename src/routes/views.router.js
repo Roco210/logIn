@@ -4,6 +4,7 @@ import { userMongo } from "../manager/user/userManagerMongo.js";
 import session from "express-session";  
 import MongoStore from "connect-mongo";
 import { URI } from '../utils.js';
+import passport from "passport";
 
 const router = Router()
 
@@ -28,7 +29,7 @@ router.get('/login', async (req, res) => {
 });
 
 router.get('/index', async (req, res) => {
-    const email = req.session.email
+    const email = req.session.passport ? req.session.passport.user.email : req.session.email
     if (!email) {
         res.redirect('/login')
     }else{

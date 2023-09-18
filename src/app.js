@@ -25,8 +25,10 @@ import porductsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from "./routes/views.router.js";
 import userRouter from './routes/user.router.js';
-import passport from 'passport';
 
+// passport
+import passport from 'passport';
+import './config/pasport.js'
 
 //server
 const app = express()
@@ -60,20 +62,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, done) =>{
-     process.nextTick( () =>{
-        return done(null, {
-            id: user._id,
-            username: user.first_name,
-        });
-    });
-});
-
-passport.deserializeUser( (user, cb)=> {
-    process.nextTick( () =>{
-        return cb(null, user);
-    });
-});
 
 
 //endpoints
